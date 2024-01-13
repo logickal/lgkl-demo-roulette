@@ -30,6 +30,7 @@
 		"@aws-sdk/client-s3": "^3.490.0",
 		"@sveltejs/adapter-static": "^3.0.1",
 		"dotenv": "^16.3.1",
+		"vercel": "^33.1.0",
 		"wavesurfer.js": "^7.6.4"
 	}
 }
