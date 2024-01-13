@@ -1,30 +1,27 @@
 <script>
-  import Registration from './Registration.svelte';
-  import Player from './Player.svelte';
+	import Registration from './Registration.svelte';
+	import Player from './Player.svelte';
 	import { loadFromLocalStorage, saveToLocalStorage } from '$lib/localStorage.js';
-	
-  export let data;
-  let username = '';
 
-  function onUserRegistered(event) {
-    username = event.detail.username;
-  }
+	export let data;
+	let username = '';
 
+	function onUserRegistered(event) {
+		username = event.detail.username;
+	}
 </script>
 
 <div class="container mx-auto content-center">
 	<div class="mx-auto content-center w-3/5 pb-6">
 		<h1 class="text-2xl">Logickal Roulette</h1>
-		<p>
-			Playing random pieces from Logickal's collection of ambient demos from 2023.</p>
+		<p>Playing random pieces from Logickal's collection of ambient demos from 2023.</p>
 	</div>
 
-  {#if !username}
-    <Registration on:registered={onUserRegistered} />
-  {:else}
-    <Player data={data} />
-  {/if}
-
+	{#if !username}
+		<Registration on:registered={onUserRegistered} />
+	{:else}
+		<Player {data} />
+	{/if}
 </div>
 
 <style lang="postcss">

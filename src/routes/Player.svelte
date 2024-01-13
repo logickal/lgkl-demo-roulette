@@ -4,36 +4,36 @@
 	import WaveSurfer from 'wavesurfer.js';
 	import { loadFromLocalStorage, saveToLocalStorage } from '$lib/localStorage.js';
 
-    export let data
-    let allMp3Urls;
+	export let data;
+	let allMp3Urls;
 	let waveSurfer;
 	let totalMp3s = 0;
 	let currentFileName = writable('loading...');
 	let currentDuration = writable(0);
 	let songRatings = loadFromLocalStorage('lgk-roulette-songRatings') || {};
-    let tempRating;
-    let demoNotes = '';
-    let totalRatings = Object.keys(songRatings).length;
+	let tempRating;
+	let demoNotes = '';
+	let totalRatings = Object.keys(songRatings).length;
 
 	function extractFileName(url) {
 		return url.split('/').pop().split('?')[0];
 	}
 
-  function setRating(rating) {
-    tempRating = rating;
-  }
+	function setRating(rating) {
+		tempRating = rating;
+	}
 
-  function registerVote() {
-    if (tempRating !== undefined) {
-      const fileName = $currentFileName;
-      songRatings[fileName] = { rating: tempRating, notes: demoNotes };
-      saveToLocalStorage('lgk-roulette-songRatings', songRatings);
-      tempRating = undefined;
-      demoNotes = ''; // Reset notes after voting
-      totalRatings = Object.keys(songRatings).length;
-    }
-    loadRandomMp3();
-  }
+	function registerVote() {
+		if (tempRating !== undefined) {
+			const fileName = $currentFileName;
+			songRatings[fileName] = { rating: tempRating, notes: demoNotes };
+			saveToLocalStorage('lgk-roulette-songRatings', songRatings);
+			tempRating = undefined;
+			demoNotes = ''; // Reset notes after voting
+			totalRatings = Object.keys(songRatings).length;
+		}
+		loadRandomMp3();
+	}
 
 	async function loadRandomMp3() {
 		let randomUrl;
@@ -89,8 +89,7 @@
 </script>
 
 <div>
-
-    <div class="mx-auto content-center w-3/5 pb-12">
+	<div class="mx-auto content-center w-3/5 pb-12">
 		<p>There are {totalMp3s} demos in the library, and you have voted on {totalRatings} demos.</p>
 	</div>
 
@@ -103,15 +102,36 @@
 		<div id="waveform"></div>
 		<button on:click={playPause} class="m-2 p-2 bg-violet-800 text-slate-200">Play/Pause</button>
 	</div>
-  <div class="ratingContainer w-3/5 mx-auto">
-	<div class="textContainer">
-		<textarea bind:value={demoNotes} placeholder="Enter any notes here from your listening" class="w-full h-24 p-3 rounded-md"></textarea>	</div>
+	<div class="ratingContainer w-3/5 mx-auto">
+		<div class="textContainer">
+			<textarea
+				bind:value={demoNotes}
+				placeholder="Enter any notes here from your listening"
+				class="w-full h-24 p-3 rounded-md"
+			></textarea>
+		</div>
 		<div class="voteContainer">
-			<button on:click={() => setRating(1)} class:bg-red-600={tempRating === 1} class="m-2 p-2 bg-red-800 text-slate-200">1</button>
-			<button on:click={() => setRating(2)} class:bg-yellow-600={tempRating === 2} class="m-2 p-2 bg-yellow-800 text-slate-200">2</button>
-			<button on:click={() => setRating(3)} class:bg-green-600={tempRating === 3} class="m-2 p-2 bg-green-800 text-slate-200">3</button>
-			<button on:click={registerVote} class="m-1 p-2 bg-violet-800 text-slate-200">Vote and Load Another</button>
-			<button on:click={loadRandomMp3} class="m-1 p-2 bg-violet-800 text-slate-200">Load another without voting</button>  
-		  </div>
-  </div>
+			<button
+				on:click={() => setRating(1)}
+				class:bg-red-600={tempRating === 1}
+				class="m-2 p-2 bg-red-800 text-slate-200">1</button
+			>
+			<button
+				on:click={() => setRating(2)}
+				class:bg-yellow-600={tempRating === 2}
+				class="m-2 p-2 bg-yellow-800 text-slate-200">2</button
+			>
+			<button
+				on:click={() => setRating(3)}
+				class:bg-green-600={tempRating === 3}
+				class="m-2 p-2 bg-green-800 text-slate-200">3</button
+			>
+			<button on:click={registerVote} class="m-1 p-2 bg-violet-800 text-slate-200"
+				>Vote and Load Another</button
+			>
+			<button on:click={loadRandomMp3} class="m-1 p-2 bg-violet-800 text-slate-200"
+				>Load another without voting</button
+			>
+		</div>
+	</div>
 </div>
