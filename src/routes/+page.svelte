@@ -68,19 +68,47 @@
   }
 </script>
 
-<div>
-    <h1>Logickal Roulette</h1>
-    <p>This app will simply play a random piece from Logickal's collection of ambient demos from 2023.</p>    
-    <div>
+<style lang="postcss">
+  :global(html, body) {
+    height: 100%;
+    background-color: theme('colors.gray.800');
+    color: theme('colors.gray.500');
+  }
+  :global(h1) {
+    color: theme('colors.gray.100');
+    font-size: larger;
+  }
+  :global(h3) {
+    color: theme('colors.gray.100');
+    font-size: large;
+  }
+  :global(p) {
+    color: theme('colors.gray.100');
+    font-size: small;
+  }
+  :global(button) {
+    border-radius: 8%;
+  }
+  
+</style>
+
+<div class="container mx-auto content-center">
+  <div class="mx-auto content-center w-3/5 pt-60 pb-24">
+    <h1 class="text-2xl">Logickal Roulette</h1>
+    <p>Playing random pieces from Logickal's collection of ambient demos from 2023.</p>
+  </div>
+
+    <div class="w-3/5 mx-auto content-left">
         <h3>Now Playing: {$currentFileName}</h3>
         <p>{$currentDuration} seconds</p>
     </div>
-</div>
 
-<div>
-    <div id="waveform"></div>
-    <button on:click={playPause}>Play/Pause</button>
-    <button on:click={loadRandomMp3}>Load Random MP3</button>
-
+    <div class="audiocontainer w-3/5 mx-auto">
+      <div id="waveform"></div>
+      <button on:click={playPause} class="m-2 p-2 bg-violet-800	text-slate-200">Play/Pause</button>
+      <button on:click={loadRandomMp3} class="m-2 p-2 bg-violet-800	text-slate-200">Load Random MP3</button>
+  
+  </div>
+  
 </div>
 
