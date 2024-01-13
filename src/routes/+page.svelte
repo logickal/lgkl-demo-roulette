@@ -6,6 +6,7 @@
   export let data;
   let waveSurfer;
   let allMp3Urls = data.mp3Urls;
+  let totalMp3s = 0;
   let listenedUrls = new Set();
   let currentFileName = writable('loading...');
   let currentDuration = writable(0);
@@ -14,6 +15,7 @@
   function extractFileName(url) {
     return url.split('/').pop().split('?')[0];
   }
+
 
   async function loadRandomMp3() {
     let randomUrl;
@@ -56,8 +58,10 @@
     // If 'data.mp3Urls' is a Promise, wait for it to resolve
     if (data.mp3Urls instanceof Promise) {
       allMp3Urls = await data.mp3Urls;
+      totalMp3s = allMp3Urls.length;
     } else {
       allMp3Urls = data.mp3Urls;
+      totalMp3s = allMp3Urls.length;
     }
 
     loadRandomMp3();
@@ -95,7 +99,7 @@
 <div class="container mx-auto content-center">
   <div class="mx-auto content-center w-3/5 pt-60 pb-24">
     <h1 class="text-2xl">Logickal Roulette</h1>
-    <p>Playing random pieces from Logickal's collection of ambient demos from 2023.</p>
+    <p>Playing random pieces from Logickal's collection of ambient demos from 2023. There are {totalMp3s} demos in the library.</p>
   </div>
 
     <div class="w-3/5 mx-auto content-left">
