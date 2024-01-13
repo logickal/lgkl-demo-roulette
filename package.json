@@ -22,5 +22,11 @@
 		"svelte": "^4.2.7",
 		"vite": "^5.0.3"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@aws-sdk/client-s3": "^3.490.0",
+		"@sveltejs/adapter-static": "^3.0.1",
+		"dotenv": "^16.3.1",
+		"wavesurfer.js": "^7.6.4"
+	}
 }
