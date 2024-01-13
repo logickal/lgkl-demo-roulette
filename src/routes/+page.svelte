@@ -12,15 +12,27 @@
 	let currentFileName = writable('loading...');
 	let currentDuration = writable(0);
 	let songRatings = loadFromLocalStorage('songRatings') || {};
+  let tempRating;
+  let totalRatings = Object.keys(songRatings).length;
 
 	function extractFileName(url) {
 		return url.split('/').pop().split('?')[0];
 	}
 
-	function rateSong(songName, rating) {
-		songRatings[songName] = rating;
-		saveToLocalStorage('songRatings', songRatings);
-	}
+  function setRating(rating) {
+    tempRating = rating;
+  }
+
+  function registerVote() {
+    if (tempRating !== undefined) {
+      const fileName = $currentFileName;
+      songRatings[fileName] = tempRating;
+      saveToLocalStorage('songRatings', songRatings);
+      tempRating = undefined;
+      totalRatings = Object.keys(songRatings).length;
+    }
+  loadRandomMp3();
+  }
 
 	async function loadRandomMp3() {
 		let randomUrl;
@@ -80,7 +92,7 @@
 		<h1 class="text-2xl">Logickal Roulette</h1>
 		<p>
 			Playing random pieces from Logickal's collection of ambient demos from 2023. There are {totalMp3s}
-			demos in the library. More statefulness is coming soon.
+			demos in the library. You have voted on {totalRatings} demos.
 		</p>
 	</div>
 
@@ -93,12 +105,12 @@
 		<div id="waveform"></div>
 		<button on:click={playPause} class="m-2 p-2 bg-violet-800 text-slate-200">Play/Pause</button>
 	</div>
-  <div class="ratingContainer w-4/5 mx-auto">
-    <button on:click={() => rateSong($currentFileName, 1)} class="m-2 p-2 bg-red-800 text-slate-200">1</button>
-    <button on:click={() => rateSong($currentFileName, 2)} class="m-2 p-2 bg-yellow-800 text-slate-200">2</button>
-    <button on:click={() => rateSong($currentFileName, 3)} class="m-2 p-2 bg-green-800 text-slate-200">3</button>
-    <button on:click={loadRandomMp3} class="m-2 p-2 bg-violet-800 text-slate-200">Register the vote and load another random MP3</button>
-
+  <div class="ratingContainer w-3/5 mx-auto">
+    <button on:click={() => setRating($currentFileName, 1)} class="m-2 p-2 bg-red-800 text-slate-200">1</button>
+    <button on:click={() => setRating($currentFileName, 2)} class="m-2 p-2 bg-yellow-800 text-slate-200">2</button>
+    <button on:click={() => setRating($currentFileName, 3)} class="m-2 p-2 bg-green-800 text-slate-200">3</button>
+    <button on:click={registerVote} class="m-1 p-2 bg-violet-800 text-slate-200">Vote and Load Another</button>
+    <button on:click={loadRandomMp3} class="m-1 p-2 bg-violet-800 text-slate-200">Load another without voting</button>
   </div>
 </div>
 
