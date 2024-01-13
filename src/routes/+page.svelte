@@ -99,7 +99,7 @@
 <div class="container mx-auto content-center">
   <div class="mx-auto content-center w-3/5 pt-60 pb-24">
     <h1 class="text-2xl">Logickal Roulette</h1>
-    <p>Playing random pieces from Logickal's collection of ambient demos from 2023. There are {totalMp3s} demos in the library.</p>
+    <p>Playing random pieces from Logickal's collection of ambient demos from 2023. There are {totalMp3s} demos in the library. More statefulness is coming soon.</p>
   </div>
 
     <div class="w-3/5 mx-auto content-left">
