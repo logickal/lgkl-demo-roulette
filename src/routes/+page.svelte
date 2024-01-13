@@ -7,8 +7,9 @@
   let waveSurfer;
   let allMp3Urls = data.mp3Urls;
   let listenedUrls = new Set();
-  let currentFileName = writable('');
+  let currentFileName = writable('loading...');
   let currentDuration = writable(0);
+
 
   function extractFileName(url) {
     return url.split('/').pop().split('?')[0];
@@ -21,20 +22,36 @@
     } while (listenedUrls.has(randomUrl) && listenedUrls.size < allMp3Urls.length);
 
     listenedUrls.add(randomUrl);
-    currentFileName.set(extractFileName(randomUrl));
+    currentFileName.set('loading...');
     waveSurfer.load(randomUrl);
+    
+    waveSurfer.on('loading', (percent) => {
+      currentFileName.set('loading');
+    });
+
+    waveSurfer.on('ready', () => {
+      currentDuration.set(waveSurfer.getDuration());
+      console.log(randomUrl);
+      currentFileName.set(extractFileName(randomUrl)); // Set to the actual file name when ready
+    });
   }
 
   onMount(async() => {
     waveSurfer = WaveSurfer.create({
       container: '#waveform',
       waveColor: 'violet',
-      progressColor: 'purple'
+      progressColor: 'purple',
+      // Set a bar width
+      barWidth: 2,
+      // Optionally, specify the spacing between bars
+      barGap: 1,
+      // And the bar radius
+      barRadius: 2,
     });
 
-    waveSurfer.on('ready', () => {
-      currentDuration.set(waveSurfer.getDuration());
-    });
+
+
+
 
     // If 'data.mp3Urls' is a Promise, wait for it to resolve
     if (data.mp3Urls instanceof Promise) {
