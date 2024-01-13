@@ -10,7 +10,7 @@
 	let totalMp3s = 0;
 	let currentFileName = writable('loading...');
 	let currentDuration = writable(0);
-	let songRatings = loadFromLocalStorage('songRatings') || {};
+	let songRatings = loadFromLocalStorage('lgk-roulette-songRatings') || {};
     let tempRating;
     let demoNotes = '';
     let totalRatings = Object.keys(songRatings).length;
@@ -27,7 +27,7 @@
     if (tempRating !== undefined) {
       const fileName = $currentFileName;
       songRatings[fileName] = { rating: tempRating, notes: demoNotes };
-      saveToLocalStorage('songRatings', songRatings);
+      saveToLocalStorage('lgk-roulette-songRatings', songRatings);
       tempRating = undefined;
       demoNotes = ''; // Reset notes after voting
       totalRatings = Object.keys(songRatings).length;
