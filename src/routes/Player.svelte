@@ -3,14 +3,20 @@
 	import { writable } from 'svelte/store';
 	import WaveSurfer from 'wavesurfer.js';
 	import { loadFromLocalStorage, saveToLocalStorage } from '$lib/localStorage.js';
+	import { createEventDispatcher } from 'svelte';
+
 
 	export let data;
+	export let songRatingsProp
+	const dispatch = createEventDispatcher();
+
+	let songRatings = {};
+	$: songRatings = { ...songRatingsProp };
 	let allMp3Urls;
 	let waveSurfer;
 	let totalMp3s = 0;
 	let currentFileName = writable('loading...');
 	let currentDuration = writable(0);
-	let songRatings = loadFromLocalStorage('lgk-roulette-songRatings') || {};
 	let tempRating;
 	let demoNotes = '';
 	let totalRatings = Object.keys(songRatings).length;
@@ -27,7 +33,8 @@
 		if (tempRating !== undefined) {
 			const fileName = $currentFileName;
 			songRatings[fileName] = { rating: tempRating, notes: demoNotes };
-			saveToLocalStorage('lgk-roulette-songRatings', songRatings);
+//			saveToLocalStorage('lgk-roulette-songRatings', songRatings);
+			dispatch('update', { songRatings });
 			tempRating = undefined;
 			demoNotes = ''; // Reset notes after voting
 			totalRatings = Object.keys(songRatings).length;

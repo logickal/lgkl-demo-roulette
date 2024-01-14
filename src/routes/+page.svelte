@@ -2,13 +2,53 @@
 	import Registration from './Registration.svelte';
 	import Player from './Player.svelte';
 	import { loadFromLocalStorage, saveToLocalStorage } from '$lib/localStorage.js';
+	import axios from 'axios';
+	import {onMount} from 'svelte';
 
 	export let data;
-	let username = '';
+	let username = loadFromLocalStorage('lgk-roulette-username') || '';
+	let songRatings = {};
 
-	function onUserRegistered(event) {
+	async function onUserRegistered(event) {
 		username = event.detail.username;
+		let response = await fetch('/getUserData', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ username })
+		});
+		console.log(response.data);
+		songRatings = response.data;
 	}
+
+	async function handleUpdate(event) {
+		songRatings = event.detail;
+		fetch('/setUserData', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ username, songRatings })
+		});
+}
+
+onMount(async () => {
+	if (username) {
+		let response = await fetch('/getUserData', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ username })
+		});
+		if (response.ok) {
+			console.log('responseok')
+			songRatings = await response.json();
+			console.log(songRatings);
+		}
+	}
+});
 </script>
 
 <div class="container mx-auto content-center">
@@ -20,7 +60,7 @@
 	{#if !username}
 		<Registration on:registered={onUserRegistered} />
 	{:else}
-		<Player {data} />
+		<Player {data} songRatingsProp={songRatings} on:update={handleUpdate} />
 	{/if}
 </div>
 
