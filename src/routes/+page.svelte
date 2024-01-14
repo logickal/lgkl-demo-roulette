@@ -58,7 +58,7 @@ onMount(async () => {
 </script>
 
 <div class="container mx-auto content-center">
-	<div class="mx-auto content-center w-3/5 pb-6">
+	<div class="mx-auto content-center w-3/5 mb-6 bg-teal-900">
 		<h1 class="text-2xl">Logickal Roulette</h1>
 		<p>Playing random pieces from Logickal's collection of ambient demos from 2023.</p>
 	</div>
@@ -75,6 +75,9 @@ onMount(async () => {
 		height: 100%;
 		background-color: theme('colors.gray.800');
 		color: theme('colors.gray.500');
+	}
+	:global(body) {
+		background-image: theme('backgroundImage.main-bg-image');
 	}
 	:global(h1) {
 		color: theme('colors.gray.100');

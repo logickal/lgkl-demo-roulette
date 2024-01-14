@@ -102,35 +102,35 @@
 </script>
 
 <div>
-	<div class="mx-auto content-center w-3/5 pb-12">
+	<div class="mx-auto content-center w-3/5 mb-12 p-5 bg-teal-900">
 		<p>There are {totalMp3s} demos in the library, and you have voted on {$totalRatings} demos.</p>
 	</div>
 
-	<div class="w-3/5 mx-auto content-left">
+	<div class="w-3/5 mx-auto content-left bg-teal-900">
 		<h3>Now Playing: {$currentFileName}</h3>
 		<p>{$currentDuration} seconds</p>
 	</div>
 
-	<div class="audiocontainer w-3/5 mx-auto">
+	<div class="audiocontainer w-3/5 mx-auto bg-teal-900">
 		<div id="waveform"></div>
 		<button on:click={playPause} class="m-2 p-2 bg-violet-800 text-slate-200">Play/Pause</button>
 	</div>
-	<div class="ratingContainer w-3/5 mx-auto">
-		<div class="textContainer">
+	<div class="ratingContainer w-3/5 mx-auto bg-teal-900">
+		<div class="textContainer mt-5">
 			<textarea
 				bind:value={demoNotes}
 				placeholder="Enter any notes here from your listening"
-				class="w-full h-24 p-3 rounded-md"
+				class="w-full h-24 p-30 rounded-md"
 			></textarea>
 		</div>
-		<div class="voteContainer">
+		<div class="voteContainer mt-5">
 			<button on:click={() => setRating(1)} class="m-2 p-2 text-slate-200 {buttonClass[1]}">1</button>
 			<button on:click={() => setRating(2)} class="m-2 p-2 text-slate-200 {buttonClass[2]}">2</button>
 			<button on:click={() => setRating(3)} class="m-2 p-2 text-slate-200 {buttonClass[3]}">3</button>
-			<button on:click={registerVote} class="m-1 p-2 bg-violet-800 text-slate-200"
+			<button on:click={registerVote} class="m-1 p-2 bg-violet-800 text-slate-200 text-sm"
 				>Vote and Load Another</button
 			>
-			<button on:click={loadRandomMp3} class="m-1 p-2 bg-violet-800 text-slate-200"
+			<button on:click={loadRandomMp3} class="m-1 p-2 bg-violet-800 text-slate-200 text-sm"
 				>Load another without voting</button
 			>
 		</div>
