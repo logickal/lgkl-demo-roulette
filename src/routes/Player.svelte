@@ -22,11 +22,19 @@
 	let demoNotes = '';
 	const totalRatings = derived(songRatingsStore, $songRatingsStore => Object.keys($songRatingsStore).length);
 
+
+	$: buttonClass = {
+    1: tempRating === 1 ? 'bg-red-600' : 'bg-red-800',
+    2: tempRating === 2 ? 'bg-yellow-600' : 'bg-yellow-800',
+    3: tempRating === 3 ? 'bg-green-600' : 'bg-green-800',
+  };
+
 	function extractFileName(url) {
 		return url.split('/').pop().split('?')[0];
 	}
 
 	function setRating(rating) {
+		console.log('setRating', rating);
 		tempRating = rating;
 	}
 
@@ -116,21 +124,9 @@
 			></textarea>
 		</div>
 		<div class="voteContainer">
-			<button
-				on:click={() => setRating(1)}
-				class:bg-red-600={tempRating === 1}
-				class="m-2 p-2 bg-red-800 text-slate-200">1</button
-			>
-			<button
-				on:click={() => setRating(2)}
-				class:bg-yellow-600={tempRating === 2}
-				class="m-2 p-2 bg-yellow-800 text-slate-200">2</button
-			>
-			<button
-				on:click={() => setRating(3)}
-				class:bg-green-600={tempRating === 3}
-				class="m-2 p-2 bg-green-800 text-slate-200">3</button
-			>
+			<button on:click={() => setRating(1)} class="m-2 p-2 text-slate-200 {buttonClass[1]}">1</button>
+			<button on:click={() => setRating(2)} class="m-2 p-2 text-slate-200 {buttonClass[2]}">2</button>
+			<button on:click={() => setRating(3)} class="m-2 p-2 text-slate-200 {buttonClass[3]}">3</button>
 			<button on:click={registerVote} class="m-1 p-2 bg-violet-800 text-slate-200"
 				>Vote and Load Another</button
 			>
