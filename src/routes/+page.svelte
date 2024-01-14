@@ -4,9 +4,9 @@
 	import { loadFromLocalStorage, saveToLocalStorage } from '$lib/localStorage.js';
 	import {onMount} from 'svelte';
 	import {songRatingsStore} from './songRatingStore.js';
-
+	
 	export let data;
-
+	
 	let username = loadFromLocalStorage('lgk-roulette-username') || '';
 
 	async function onUserRegistered(event) {
@@ -76,7 +76,7 @@ onMount(async () => {
 		background-color: theme('colors.gray.800');
 		color: theme('colors.gray.500');
 	}
-	:global(body) {
+:global(body) {
 		background-image: theme('backgroundImage.main-bg-image');
 	}
 	:global(h1) {
