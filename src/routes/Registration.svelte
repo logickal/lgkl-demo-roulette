@@ -1,5 +1,5 @@
 <script>
-	import { loadFromLocalStorage, saveToLocalStorage } from '$lib/localStorage.js';
+	import { saveToLocalStorage } from '$lib/localStorage.js';
 	import { createEventDispatcher } from 'svelte';
 
 	const dispatch = createEventDispatcher();

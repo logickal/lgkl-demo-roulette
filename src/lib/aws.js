@@ -24,7 +24,6 @@ export async function getAllMp3Urls() {
         })
         .map(obj => `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${obj.Key}`);
     
-        console.log
         return allMp3s;
     } catch (error) {
         console.error("Error fetching from S3:", error);

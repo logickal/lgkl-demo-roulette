@@ -2,7 +2,6 @@
 	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
 	import WaveSurfer from 'wavesurfer.js';
-	import { loadFromLocalStorage, saveToLocalStorage } from '$lib/localStorage.js';
 	import { createEventDispatcher } from 'svelte';
 	import { songRatingsStore } from './songRatingStore.js';
 	import { derived } from 'svelte/store';
@@ -35,7 +34,6 @@
 		if (tempRating !== undefined) {
 			const fileName = $currentFileName;
 			songRatings[fileName] = { ...songRatings[fileName], rating: tempRating, notes: demoNotes };
-			console.log(songRatings)
 			dispatch('update', { songRatings });
 			tempRating = undefined;
 			demoNotes = ''; // Reset notes after voting
@@ -61,7 +59,6 @@
 
 		waveSurfer.on('ready', () => {
 			currentDuration.set(waveSurfer.getDuration());
-			console.log(randomUrl);
 			currentFileName.set(extractFileName(randomUrl)); // Set to the actual file name when ready
 		});
 	}

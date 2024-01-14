@@ -11,7 +11,6 @@
 
 	async function onUserRegistered(event) {
 		username = event.detail.username;
-		console.log('the username we see at register is: ' + username);
 		let response = await fetch('/getUserData', {
 			method: 'POST',
 			headers: {
@@ -20,10 +19,7 @@
 			body: JSON.stringify({ username })
 		});
 		if (response.ok) {
-			console.log('getUserdata responseok')
-			console.log("loading song ratings on mount")
 			const songRatings = await response.json();
-			console.log(songRatings);
 			songRatingsStore.set(songRatings);
 			saveToLocalStorage('lgk-roulette-songRatings', songRatings);
 		}
@@ -31,7 +27,6 @@
 
 	async function handleUpdate(event) {
 		const songRatings = event.detail.songRatings;
-		console.log(songRatings);
 		songRatingsStore.set(songRatings);
 		fetch('/setUserData', {
 			method: 'POST',
@@ -45,10 +40,7 @@
 }
 
 onMount(async () => {
-	console.log('onmount');
-	console.log('the username we see at mount is: ' + username);
 	if (username) {
-		console.log('username exists, fetching user data');
 		let response = await fetch('/getUserData', {
 			method: 'POST',
 			headers: {
@@ -57,10 +49,7 @@ onMount(async () => {
 			body: JSON.stringify({ username })
 		});
 		if (response.ok) {
-			console.log('responseok')
-			console.log("loading song ratings on mount")
 			let songRatings = await response.json();
-			console.log(songRatings);
 			songRatingsStore.set(songRatings);
 			saveToLocalStorage('lgk-roulette-songRatings', songRatings);
 		}
