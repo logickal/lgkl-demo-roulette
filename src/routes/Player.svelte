@@ -4,7 +4,7 @@
 	import WaveSurfer from 'wavesurfer.js';
 	import { loadFromLocalStorage, saveToLocalStorage } from '$lib/localStorage.js';
 	import { createEventDispatcher } from 'svelte';
-	import { songRatingsStore } from './Store.js';
+	import { songRatingsStore } from './songRatingStore.js';
 	import { derived } from 'svelte/store';
 
 	export let data;
@@ -14,8 +14,6 @@
 	songRatingsStore.subscribe(value => {
 		songRatings = value;
 	});
-	console.log('this is the component songRatings');
-	console.log(songRatings);
 	let allMp3Urls;
 	let waveSurfer;
 	let totalMp3s = 0;
@@ -23,8 +21,6 @@
 	let currentDuration = writable(0);
 	let tempRating;
 	let demoNotes = '';
-	console.log('this is the component songRatings being counted');
-	console.log(songRatings);
 	const totalRatings = derived(songRatingsStore, $songRatingsStore => Object.keys($songRatingsStore).length);
 
 	function extractFileName(url) {

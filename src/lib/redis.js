@@ -1,6 +1,5 @@
-import { REDIS_CONNECTION } from '$env/static/private';
-import Redis from 'ioredis';
+import { kv } from '@vercel/kv';
 
-const redis = new Redis(REDIS_CONNECTION);
+const redis = kv;
 
 export default redis;

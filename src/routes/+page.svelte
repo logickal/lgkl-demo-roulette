@@ -3,13 +3,15 @@
 	import Player from './Player.svelte';
 	import { loadFromLocalStorage, saveToLocalStorage } from '$lib/localStorage.js';
 	import {onMount} from 'svelte';
-	import {songRatingsStore} from './Store.js';
+	import {songRatingsStore} from './songRatingStore.js';
+
 	export let data;
 
 	let username = loadFromLocalStorage('lgk-roulette-username') || '';
 
 	async function onUserRegistered(event) {
 		username = event.detail.username;
+		console.log('the username we see at register is: ' + username);
 		let response = await fetch('/getUserData', {
 			method: 'POST',
 			headers: {
@@ -59,6 +61,7 @@ onMount(async () => {
 			console.log("loading song ratings on mount")
 			let songRatings = await response.json();
 			console.log(songRatings);
+			songRatingsStore.set(songRatings);
 			saveToLocalStorage('lgk-roulette-songRatings', songRatings);
 		}
 	}

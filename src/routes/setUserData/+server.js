@@ -1,6 +1,4 @@
-import Redis from 'ioredis';
-
-let redis = new Redis();
+import redis from '$lib/redis';
 
 export async function POST(event) {
     const body = await event.request.json();
