@@ -2,28 +2,35 @@
 	import Registration from './Registration.svelte';
 	import Player from './Player.svelte';
 	import { loadFromLocalStorage, saveToLocalStorage } from '$lib/localStorage.js';
-	import axios from 'axios';
 	import {onMount} from 'svelte';
-
+	import {songRatingsStore} from './Store.js';
 	export let data;
+
 	let username = loadFromLocalStorage('lgk-roulette-username') || '';
-	let songRatings = {};
 
 	async function onUserRegistered(event) {
 		username = event.detail.username;
 		let response = await fetch('/getUserData', {
-			method: 'GET',
+			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({ username })
 		});
-		console.log(response.data);
-		songRatings = response.data;
+		if (response.ok) {
+			console.log('getUserdata responseok')
+			console.log("loading song ratings on mount")
+			const songRatings = await response.json();
+			console.log(songRatings);
+			songRatingsStore.set(songRatings);
+			saveToLocalStorage('lgk-roulette-songRatings', songRatings);
+		}
 	}
 
 	async function handleUpdate(event) {
-		songRatings = event.detail;
+		const songRatings = event.detail.songRatings;
+		console.log(songRatings);
+		songRatingsStore.set(songRatings);
 		fetch('/setUserData', {
 			method: 'POST',
 			headers: {
@@ -31,10 +38,15 @@
 			},
 			body: JSON.stringify({ username, songRatings })
 		});
+		saveToLocalStorage('lgk-roulette-songRatings', songRatings);
+
 }
 
 onMount(async () => {
+	console.log('onmount');
+	console.log('the username we see at mount is: ' + username);
 	if (username) {
+		console.log('username exists, fetching user data');
 		let response = await fetch('/getUserData', {
 			method: 'POST',
 			headers: {
@@ -44,8 +56,10 @@ onMount(async () => {
 		});
 		if (response.ok) {
 			console.log('responseok')
-			songRatings = await response.json();
+			console.log("loading song ratings on mount")
+			let songRatings = await response.json();
 			console.log(songRatings);
+			saveToLocalStorage('lgk-roulette-songRatings', songRatings);
 		}
 	}
 });
@@ -60,7 +74,7 @@ onMount(async () => {
 	{#if !username}
 		<Registration on:registered={onUserRegistered} />
 	{:else}
-		<Player {data} songRatingsProp={songRatings} on:update={handleUpdate} />
+		<Player {data} on:update={handleUpdate} />
 	{/if}
 </div>
 

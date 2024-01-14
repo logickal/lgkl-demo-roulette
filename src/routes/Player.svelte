@@ -4,14 +4,18 @@
 	import WaveSurfer from 'wavesurfer.js';
 	import { loadFromLocalStorage, saveToLocalStorage } from '$lib/localStorage.js';
 	import { createEventDispatcher } from 'svelte';
-
+	import { songRatingsStore } from './Store.js';
+	import { derived } from 'svelte/store';
 
 	export let data;
-	export let songRatingsProp
 	const dispatch = createEventDispatcher();
 
-	let songRatings = {};
-	$: songRatings = { ...songRatingsProp };
+	let songRatings;
+	songRatingsStore.subscribe(value => {
+		songRatings = value;
+	});
+	console.log('this is the component songRatings');
+	console.log(songRatings);
 	let allMp3Urls;
 	let waveSurfer;
 	let totalMp3s = 0;
@@ -19,7 +23,9 @@
 	let currentDuration = writable(0);
 	let tempRating;
 	let demoNotes = '';
-	let totalRatings = Object.keys(songRatings).length;
+	console.log('this is the component songRatings being counted');
+	console.log(songRatings);
+	const totalRatings = derived(songRatingsStore, $songRatingsStore => Object.keys($songRatingsStore).length);
 
 	function extractFileName(url) {
 		return url.split('/').pop().split('?')[0];
@@ -32,12 +38,11 @@
 	function registerVote() {
 		if (tempRating !== undefined) {
 			const fileName = $currentFileName;
-			songRatings[fileName] = { rating: tempRating, notes: demoNotes };
-//			saveToLocalStorage('lgk-roulette-songRatings', songRatings);
+			songRatings[fileName] = { ...songRatings[fileName], rating: tempRating, notes: demoNotes };
+			console.log(songRatings)
 			dispatch('update', { songRatings });
 			tempRating = undefined;
 			demoNotes = ''; // Reset notes after voting
-			totalRatings = Object.keys(songRatings).length;
 		}
 		loadRandomMp3();
 	}
@@ -97,7 +102,7 @@
 
 <div>
 	<div class="mx-auto content-center w-3/5 pb-12">
-		<p>There are {totalMp3s} demos in the library, and you have voted on {totalRatings} demos.</p>
+		<p>There are {totalMp3s} demos in the library, and you have voted on {$totalRatings} demos.</p>
 	</div>
 
 	<div class="w-3/5 mx-auto content-left">

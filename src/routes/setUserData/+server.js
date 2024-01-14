@@ -4,7 +4,6 @@ let redis = new Redis();
 
 export async function POST(event) {
     const body = await event.request.json();
-    console.log(body);
     let { username, songRatings} = body;
     try { 
         redis.set(username, JSON.stringify(songRatings));
