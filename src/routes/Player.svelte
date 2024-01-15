@@ -40,8 +40,10 @@
 
 	function registerVote() {
 		console.log('registerVote');
+		console.log('tempRating', tempRating);
 		if (tempRating !== undefined) {
 			const fileName = $currentFileName;
+			console.log('fileName', fileName);
 			songRatings[fileName] = { ...songRatings[fileName], rating: tempRating, notes: demoNotes };
 			console.log('songRatings', songRatings);
 			dispatch('update', { songRatings });
