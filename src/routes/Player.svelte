@@ -105,10 +105,14 @@
 
 <div>
 	<div class="mx-auto content-center w-3/5 mb-12 p-5 bg-teal-950">
-		<p>There are {totalMp3s} demos in the library, and you have voted on {$totalRatings} demos.</p>
+		<p class="text-lg">There are <span class="font-bold">{totalMp3s}</span> demos in the library, and you have voted on <span class="font-bold">{$totalRatings} </span>demos.</p>
 	</div>
 
 	<div class="w-3/5 mx-auto content-left bg-teal-950 p-5">
+		<div class="my-5 italic">
+			<p>Please note that these are unmastered demos and audio levels may require considerable adjustment for proper listening.</p>
+			<p>Please also allow a few moments for the audio files to load in the player.</p>
+		</div>
 		<h3>Now Playing: {$currentFileName}</h3>
 		<p>{$currentDuration} seconds</p>
 	</div>
@@ -125,7 +129,12 @@
 				class="w-full h-24 p-30 rounded-md"
 			></textarea>
 		</div>
-		<div class="voteContainer mt-5">
+		<div class="voteContainer mt-5 pb-10">
+			<div class="mb-3">
+				<p>Vote on this simple scale your feelings about the piece of music you are listening to.</p>
+				<p>Roughly, a 3 means you feel this piece definitely deserves release and only requires minimal work to reach that state.  A 2 suggests that you see promise to the piece, but it may need some effort to get into a releasable state.  A 1 suggests this idea should be, at very least, set aside for some later date, or perhaps binned completely. </p>
+			</div>
+
 			<button on:click={() => setRating(1)} class="m-2 p-2 text-slate-200 {buttonClass[1]}">1</button>
 			<button on:click={() => setRating(2)} class="m-2 p-2 text-slate-200 {buttonClass[2]}">2</button>
 			<button on:click={() => setRating(3)} class="m-2 p-2 text-slate-200 {buttonClass[3]}">3</button>
