@@ -51,7 +51,8 @@ onMount(async () => {
 			body: JSON.stringify({ username })
 		});
 		if (response.ok) {
-			let songRatings = await response.json();
+			let data = await response.json();
+			let songRatings = data || {};
 			songRatingsStore.set(songRatings);
 			saveToLocalStorage('lgk-roulette-songRatings', songRatings);
 		}
