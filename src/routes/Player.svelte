@@ -37,6 +37,12 @@
 		tempRating = rating;
 	}
 
+	function secondsToMinutesAndSeconds(seconds) {
+		const minutes = Math.floor(seconds / 60);
+		const remainingSeconds = Math.floor(seconds % 60);
+		return `${minutes} minutes ${remainingSeconds < 10 ? '0' : ''}${remainingSeconds} seconds`;
+	}
+
 	function registerVote() {
 
 		if (tempRating !== undefined) {
@@ -66,7 +72,7 @@
 		});
 
 		waveSurfer.on('ready', () => {
-			$currentDuration = waveSurfer.getDuration();
+			$currentDuration = secondsToMinutesAndSeconds(waveSurfer.getDuration());
 			$currentDuration = $currentDuration; // Trigger a re-render
 			$currentFileName = extractFileName(randomUrl); // Set to the actual file name when ready
 			$currentFileName = $currentFileName; // Trigger a re-render
@@ -114,7 +120,7 @@
 			<p>Please also allow a few moments for the audio files to load in the player.</p>
 		</div>
 		<h3>Now Playing: {$currentFileName}</h3>
-		<p>{$currentDuration} seconds</p>
+		<p>{$currentDuration}</p>
 	</div>
 
 	<div class="audiocontainer w-3/5 mx-auto bg-teal-950">
