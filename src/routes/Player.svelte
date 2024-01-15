@@ -16,8 +16,8 @@
 	let allMp3Urls = {};
 	let waveSurfer;
 	let totalMp3s = 0;
-	let currentFileName = writable('loading...');
-	let currentDuration = writable(0);
+	$: currentFileName = writable('loading...');
+	$: currentDuration = writable(0);
 	let tempRating;
 	let demoNotes = '';
 	const totalRatings = derived(songRatingsStore, $songRatingsStore => Object.keys($songRatingsStore).length);
@@ -50,6 +50,7 @@
 	}
 
 	async function loadRandomMp3() {
+		console.log('loadRandomMp3');
 		let randomUrl;
 		do {
 			randomUrl = allMp3Urls[Math.floor(Math.random() * allMp3Urls.length)];
