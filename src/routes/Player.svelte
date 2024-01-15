@@ -58,16 +58,16 @@
 			Object.keys(songRatings).length < allMp3Urls.length
 		);
 
-		currentFileName.set('loading...');
+		$currentFileName = 'loading...';
 		waveSurfer.load(randomUrl);
 
 		waveSurfer.on('loading', (percent) => {
-			currentFileName.set('loading...');
+			$currentFileName = 'loading...';
 		});
 
 		waveSurfer.on('ready', () => {
-			currentDuration.set(waveSurfer.getDuration());
-			currentFileName.set(extractFileName(randomUrl)); // Set to the actual file name when ready
+			$currentDuration = waveSurfer.getDuration();
+			$currentFileName = extractFileName(randomUrl); // Set to the actual file name when ready
 		});
 	}
 
