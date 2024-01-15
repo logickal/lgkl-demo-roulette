@@ -58,7 +58,7 @@ onMount(async () => {
 </script>
 
 <div class="container mx-auto content-center">
-	<div class="mx-auto content-center w-3/5 mb-6 bg-teal-900">
+	<div class="mx-auto content-center w-3/5 mb-6 p-10 bg-teal-950">
 		<h1 class="text-2xl">Logickal Roulette</h1>
 		<p>Playing random pieces from Logickal's collection of ambient demos from 2023.</p>
 	</div>

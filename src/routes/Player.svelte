@@ -102,20 +102,20 @@
 </script>
 
 <div>
-	<div class="mx-auto content-center w-3/5 mb-12 p-5 bg-teal-900">
+	<div class="mx-auto content-center w-3/5 mb-12 p-5 bg-teal-950">
 		<p>There are {totalMp3s} demos in the library, and you have voted on {$totalRatings} demos.</p>
 	</div>
 
-	<div class="w-3/5 mx-auto content-left bg-teal-900">
+	<div class="w-3/5 mx-auto content-left bg-teal-950 p-5">
 		<h3>Now Playing: {$currentFileName}</h3>
 		<p>{$currentDuration} seconds</p>
 	</div>
 
-	<div class="audiocontainer w-3/5 mx-auto bg-teal-900">
+	<div class="audiocontainer w-3/5 mx-auto bg-teal-950">
 		<div id="waveform"></div>
 		<button on:click={playPause} class="m-2 p-2 bg-violet-800 text-slate-200">Play/Pause</button>
 	</div>
-	<div class="ratingContainer w-3/5 mx-auto bg-teal-900">
+	<div class="ratingContainer w-3/5 mx-auto bg-teal-950">
 		<div class="textContainer mt-5">
 			<textarea
 				bind:value={demoNotes}
