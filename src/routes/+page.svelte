@@ -26,15 +26,17 @@
 	}
 
 	async function handleUpdate(event) {
+		console.log('Handling Update');
 		const songRatings = event.detail.songRatings;
 		songRatingsStore.set(songRatings);
-		fetch('/setUserData', {
+		const updateResponse = await fetch('/setUserData', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({ username, songRatings })
 		});
+		console.log('updateResponse', updateResponse);
 		saveToLocalStorage('lgk-roulette-songRatings', songRatings);
 
 }

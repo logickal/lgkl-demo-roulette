@@ -63,7 +63,6 @@
 		waveSurfer.load(randomUrl);
 
 		waveSurfer.on('loading', (percent) => {
-			console.log('wavesurfer Loading', percent);
 			$currentFileName = 'loading...';
 		});
 
