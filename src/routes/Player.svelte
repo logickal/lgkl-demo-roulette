@@ -62,7 +62,7 @@
 		waveSurfer.load(randomUrl);
 
 		waveSurfer.on('loading', (percent) => {
-			currentFileName.set('loading');
+			currentFileName.set('loading...');
 		});
 
 		waveSurfer.on('ready', () => {
