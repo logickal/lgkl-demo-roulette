@@ -10,7 +10,6 @@
 	let username = loadFromLocalStorage('lgk-roulette-username') || '';
 
 	async function onUserRegistered(event) {
-		console.log('Handling User Registration');
 		username = event.detail.username;
 		let response = await fetch('/getUserData', {
 			method: 'POST',
@@ -22,14 +21,12 @@
 		if (response.ok) {
 			let json = await response.json();
 			let songRatings = json || {};
-			console.log('songRatings: ', songRatings);
 			songRatingsStore.set(songRatings);
 			saveToLocalStorage('lgk-roulette-songRatings', songRatings);
 		}
 	}
 
 	async function handleUpdate(event) {
-		console.log('Handling Update');
 		const songRatings = event.detail.songRatings;
 		songRatingsStore.set(songRatings);
 		const updateResponse = await fetch('/setUserData', {
@@ -39,7 +36,6 @@
 			},
 			body: JSON.stringify({ username, songRatings })
 		});
-		console.log('updateResponse', updateResponse)
 		saveToLocalStorage('lgk-roulette-songRatings', songRatings);
 
 }

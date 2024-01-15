@@ -34,22 +34,14 @@
 	}
 
 	function setRating(rating) {
-		console.log('setRating', rating);
 		tempRating = rating;
 	}
 
 	function registerVote() {
-		if (typeof window !== 'undefined') {
-			console.log('Window is defined')
-		}
-		console.log('registerVote');
-		console.log('tempRating', tempRating);
+
 		if (tempRating !== undefined) {
 			const fileName = $currentFileName;
-			console.log('fileName: ' +  fileName);
-			console.log('songratings: ' + songRatings[fileName]);
 			songRatings[fileName] = { ...songRatings[fileName], rating: tempRating, notes: demoNotes };
-			console.log('songRatings', songRatings);
 			dispatch('update', { songRatings });
 			tempRating = undefined;
 			demoNotes = ''; // Reset notes after voting
@@ -58,7 +50,6 @@
 	}
 
 	async function loadRandomMp3() {
-		console.log('loadRandomMp3');
 		let randomUrl;
 		do {
 			randomUrl = allMp3Urls[Math.floor(Math.random() * allMp3Urls.length)];
@@ -68,7 +59,6 @@
 		);
 
 		$currentFileName = 'loading...';
-		console.log('Loading random mp3', randomUrl);
 		waveSurfer.load(randomUrl);
 
 		waveSurfer.on('loading', (percent) => {
@@ -76,18 +66,14 @@
 		});
 
 		waveSurfer.on('ready', () => {
-			console.log('Wavesurfer ready, should be setting the duration and filename here');
 			$currentDuration = waveSurfer.getDuration();
 			$currentDuration = $currentDuration; // Trigger a re-render
-			console.log($currentDuration);
 			$currentFileName = extractFileName(randomUrl); // Set to the actual file name when ready
 			$currentFileName = $currentFileName; // Trigger a re-render
-			console.log($currentFileName);
 		});
 	}
 
 	onMount(async () => {
-		console.log('Mounted wavesurfer');
 		waveSurfer = WaveSurfer.create({
 			container: '#waveform',
 			waveColor: 'violet',
