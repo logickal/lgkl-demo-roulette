@@ -47,6 +47,7 @@
 		if (tempRating !== undefined) {
 			const fileName = $currentFileName;
 			console.log('fileName', fileName);
+			console.log(songRatings[fileName]);
 			songRatings[fileName] = { ...songRatings[fileName], rating: tempRating, notes: demoNotes };
 			console.log('songRatings', songRatings);
 			dispatch('update', { songRatings });
