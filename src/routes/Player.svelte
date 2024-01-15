@@ -11,7 +11,7 @@
 
 	let songRatings = {};
 	songRatingsStore.subscribe((value) => {
-		songRatings = value;
+		songRatings = value || {};
 	});
 	let allMp3Urls = {};
 	let waveSurfer;
@@ -22,7 +22,7 @@
 	let demoNotes = '';
 	const totalRatings = derived(
 		songRatingsStore,
-		($songRatingsStore) => Object.keys($songRatingsStore).length
+		($songRatingsStore) => Object.keys($songRatingsStore || {}).length || 0
 	);
 
 	$: buttonClass = {
