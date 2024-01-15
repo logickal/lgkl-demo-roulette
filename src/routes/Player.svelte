@@ -39,6 +39,9 @@
 	}
 
 	function registerVote() {
+		if (typeof window !== 'undefined') {
+			console.log('Window is defined')
+		}
 		console.log('registerVote');
 		console.log('tempRating', tempRating);
 		if (tempRating !== undefined) {
