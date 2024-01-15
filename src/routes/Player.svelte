@@ -39,9 +39,11 @@
 	}
 
 	function registerVote() {
+		console.log('registerVote');
 		if (tempRating !== undefined) {
 			const fileName = $currentFileName;
 			songRatings[fileName] = { ...songRatings[fileName], rating: tempRating, notes: demoNotes };
+			console.log('songRatings', songRatings);
 			dispatch('update', { songRatings });
 			tempRating = undefined;
 			demoNotes = ''; // Reset notes after voting
