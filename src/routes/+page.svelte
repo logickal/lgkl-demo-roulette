@@ -42,6 +42,7 @@
 }
 
 onMount(async () => {
+	console.log('Page OnMount');
 	if (username) {
 		let response = await fetch('/getUserData', {
 			method: 'POST',
@@ -52,7 +53,9 @@ onMount(async () => {
 		});
 		if (response.ok) {
 			let data = await response.json();
+			console.log('data: ', data); // data:  { '2023-01-01-01.mp3': { rating: 1, notes: 'test' } }
 			let songRatings = data || {};
+			console.log('songRatings', songRatings);
 			songRatingsStore.set(songRatings);
 			saveToLocalStorage('lgk-roulette-songRatings', songRatings);
 		}
