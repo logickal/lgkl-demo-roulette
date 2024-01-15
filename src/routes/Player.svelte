@@ -69,7 +69,9 @@
 		waveSurfer.on('ready', () => {
 			console.log('Wavesurfer ready, should be setting the duration and filename here');
 			$currentDuration = waveSurfer.getDuration();
+			console.log(currentDuration);
 			$currentFileName = extractFileName(randomUrl); // Set to the actual file name when ready
+			console.log(currentFileName);
 		});
 	}
 
