@@ -10,6 +10,7 @@
 	let username = loadFromLocalStorage('lgk-roulette-username') || '';
 
 	async function onUserRegistered(event) {
+		console.log('Handling User Registration');
 		username = event.detail.username;
 		let response = await fetch('/getUserData', {
 			method: 'POST',
@@ -19,7 +20,9 @@
 			body: JSON.stringify({ username })
 		});
 		if (response.ok) {
-			const songRatings = await response.json();
+			let json = await response.json();
+			let songRatings = json || {};
+			console.log('songRatings: ', songRatings);
 			songRatingsStore.set(songRatings);
 			saveToLocalStorage('lgk-roulette-songRatings', songRatings);
 		}
@@ -36,13 +39,12 @@
 			},
 			body: JSON.stringify({ username, songRatings })
 		});
-		console.log('updateResponse', updateResponse);
+		console.log('updateResponse', updateResponse)
 		saveToLocalStorage('lgk-roulette-songRatings', songRatings);
 
 }
 
 onMount(async () => {
-	console.log('Page OnMount');
 	if (username) {
 		let response = await fetch('/getUserData', {
 			method: 'POST',
@@ -52,10 +54,7 @@ onMount(async () => {
 			body: JSON.stringify({ username })
 		});
 		if (response.ok) {
-			let data = await response.json();
-			console.log('data: ', data); // data:  { '2023-01-01-01.mp3': { rating: 1, notes: 'test' } }
-			let songRatings = data || {};
-			console.log('songRatings', songRatings);
+			let songRatings = await response.json();
 			songRatingsStore.set(songRatings);
 			saveToLocalStorage('lgk-roulette-songRatings', songRatings);
 		}
