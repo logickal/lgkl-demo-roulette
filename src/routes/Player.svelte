@@ -13,7 +13,7 @@
 	songRatingsStore.subscribe(value => {
 		songRatings = value;
 	});
-	let allMp3Urls;
+	let allMp3Urls = {};
 	let waveSurfer;
 	let totalMp3s = 0;
 	let currentFileName = writable('loading...');
