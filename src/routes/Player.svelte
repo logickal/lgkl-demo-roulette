@@ -9,7 +9,7 @@
 	export let data;
 	const dispatch = createEventDispatcher();
 
-	let songRatings;
+	let songRatings = {};
 	songRatingsStore.subscribe(value => {
 		songRatings = value;
 	});
@@ -59,19 +59,23 @@
 		);
 
 		$currentFileName = 'loading...';
+		console.log('Loading random mp3', randomUrl);
 		waveSurfer.load(randomUrl);
 
 		waveSurfer.on('loading', (percent) => {
+			console.log('wavesurfer Loading', percent);
 			$currentFileName = 'loading...';
 		});
 
 		waveSurfer.on('ready', () => {
+			console.log('Wavesurfer ready, should be setting the duration and filename here');
 			$currentDuration = waveSurfer.getDuration();
 			$currentFileName = extractFileName(randomUrl); // Set to the actual file name when ready
 		});
 	}
 
 	onMount(async () => {
+		console.log('Mounted wavesurfer');
 		waveSurfer = WaveSurfer.create({
 			container: '#waveform',
 			waveColor: 'violet',
