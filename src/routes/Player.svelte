@@ -64,31 +64,30 @@
 			$currentFileName = 'All songs have been rated.';
 		} else {
 			do {
-			randomUrl = allMp3Urls[Math.floor(Math.random() * allMp3Urls.length)];
+				randomUrl = allMp3Urls[Math.floor(Math.random() * allMp3Urls.length)];
 			} while (
 				songRatings[extractFileName(randomUrl)] !== undefined &&
 				Object.keys(songRatings).length < allMp3Urls.length
 			);
-		}
 
-
-		$currentFileName = 'loading...';
-		if (randomUrl) {
-			waveSurfer.load(randomUrl);
-		} else {
-			waveSurfer.empty();
-		}
-
-		waveSurfer.on('loading', (percent) => {
 			$currentFileName = 'loading...';
-		});
+			if (randomUrl) {
+				waveSurfer.load(randomUrl);
+			} else {
+				waveSurfer.empty();
+			}
 
-		waveSurfer.on('ready', () => {
-			$currentDuration = secondsToMinutesAndSeconds(waveSurfer.getDuration());
-			$currentDuration = $currentDuration; // Trigger a re-render
-			$currentFileName = extractFileName(randomUrl); // Set to the actual file name when ready
-			$currentFileName = $currentFileName; // Trigger a re-render
-		});
+			waveSurfer.on('loading', (percent) => {
+				$currentFileName = 'loading...';
+			});
+
+			waveSurfer.on('ready', () => {
+				$currentDuration = secondsToMinutesAndSeconds(waveSurfer.getDuration());
+				$currentDuration = $currentDuration; // Trigger a re-render
+				$currentFileName = extractFileName(randomUrl); // Set to the actual file name when ready
+				$currentFileName = $currentFileName; // Trigger a re-render
+			});
+		}
 	}
 
 	onMount(async () => {
@@ -209,43 +208,42 @@
 </div>
 
 <style>
-	    #waveform {
-      cursor: pointer;
-      position: relative;
-    }
-    #hover {
-      position: absolute;
-      left: 0;
-      top: 0;
-      z-index: 10;
-      pointer-events: none;
-      height: 100%;
-      width: 0;
-      mix-blend-mode: overlay;
-      background: rgba(255, 255, 255, 0.5);
-      opacity: 0;
-      transition: opacity 0.2s ease;
-    }
-    #waveform:hover #hover {
-      opacity: 1;
-    }
-    #time,
-    #duration {
-      position: absolute;
-      z-index: 11;
-      top: 50%;
-      margin-top: -1px;
-      transform: translateY(-50%);
-      font-size: 9px;
-      background: rgba(79, 78, 78, 0.75);
-      padding: 2px;
-      color: #ddd;
-    }
-    #time {
-      left: 0;
-    }
-    #duration {
-      right: 0;
-    }
-
+	#waveform {
+		cursor: pointer;
+		position: relative;
+	}
+	#hover {
+		position: absolute;
+		left: 0;
+		top: 0;
+		z-index: 10;
+		pointer-events: none;
+		height: 100%;
+		width: 0;
+		mix-blend-mode: overlay;
+		background: rgba(255, 255, 255, 0.5);
+		opacity: 0;
+		transition: opacity 0.2s ease;
+	}
+	#waveform:hover #hover {
+		opacity: 1;
+	}
+	#time,
+	#duration {
+		position: absolute;
+		z-index: 11;
+		top: 50%;
+		margin-top: -1px;
+		transform: translateY(-50%);
+		font-size: 9px;
+		background: rgba(79, 78, 78, 0.75);
+		padding: 2px;
+		color: #ddd;
+	}
+	#time {
+		left: 0;
+	}
+	#duration {
+		right: 0;
+	}
 </style>
