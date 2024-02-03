@@ -58,15 +58,26 @@
 
 	async function loadRandomMp3() {
 		let randomUrl;
-		do {
+		let unratedSongs = allMp3Urls.filter((url) => songRatings[extractFileName(url)] === undefined);
+
+		if (unratedSongs.length === 0) {
+			$currentFileName = 'All songs have been rated.';
+		} else {
+			do {
 			randomUrl = allMp3Urls[Math.floor(Math.random() * allMp3Urls.length)];
-		} while (
-			songRatings[extractFileName(randomUrl)] !== undefined &&
-			Object.keys(songRatings).length < allMp3Urls.length
-		);
+			} while (
+				songRatings[extractFileName(randomUrl)] !== undefined &&
+				Object.keys(songRatings).length < allMp3Urls.length
+			);
+		}
+
 
 		$currentFileName = 'loading...';
-		waveSurfer.load(randomUrl);
+		if (randomUrl) {
+			waveSurfer.load(randomUrl);
+		} else {
+			waveSurfer.empty();
+		}
 
 		waveSurfer.on('loading', (percent) => {
 			$currentFileName = 'loading...';
