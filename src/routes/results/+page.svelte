@@ -3,28 +3,13 @@
     import { onMount } from 'svelte';
     import TableCell from './TableCell.svelte';
 
-    let data = {};
     let songData = {};
 
     onMount(async () => {
         const response = await fetch('/getResults');
-        data = await response.json();
+        songData = await response.json();
     });
 
-    $: {
-        for (let user in data) {
-            for (let song in data[user]) {
-                if (!songData[song]) {
-                    songData[song] = { ratings: [], notes: [], avgRating: 0 };
-                }
-                songData[song].ratings.push(data[user][song].rating);
-                songData[song].notes.push(data[user][song].notes);
-                songData[song].avgRating = songData[song].ratings.reduce((a, b) => a + b, 0) / songData[song].ratings.length;
-            }
-        }
-
-        songData = Object.entries(songData).sort((a, b) => b[1].avgRating - a[1].avgRating).reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {});
-    }
 </script>
 
 <div class="container mx-auto content-center h-screen">
