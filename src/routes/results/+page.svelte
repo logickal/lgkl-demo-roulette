@@ -1,20 +1,47 @@
 <!-- src/routes/Results.svelte -->
 <script>
     import { onMount } from 'svelte';
+    import { writable } from 'svelte/store';
     import TableCell from './TableCell.svelte';
 
     let songData = {};
+    let group1 = writable([]), group2 = writable([]), group3 = writable([]);
+    let ratingRanges = ['3.00', '2.00 - 2.99', '1.00 - 1.99'];
+
+
+    function average(arr) {
+        return arr.reduce((a, b) => a + b, 0) / arr.length;
+    }
 
     onMount(async () => {
         const response = await fetch('/getResults');
         songData = await response.json();
-    });
 
+        let g1 = [], g2 = [], g3 = [];
+
+        Object.entries(songData).forEach(([song, data]) => {
+            let avgRating = average(data.ratings);
+            if (avgRating >= 3) {
+                g1.push({song, data});
+            } else if (avgRating >= 2) {
+                g2.push({song, data});
+            } else {
+                g3.push({song, data});
+            }
+        });
+
+        $group1 = g1;
+        $group2 = g2;
+        $group3 = g3;
+    });
 </script>
 
+
+
 <div class="container mx-auto content-center h-screen">
-	<div class="mx-auto content-center w-7/8 mb-6 p-10 bg-teal-950">
-        <h1 class="text-4xl">Results</h1>
+    {#each [$group1, $group2, $group3] as group, i (group)}
+    <div class="mx-auto content-center w-7/8 mb-6 p-10 bg-teal-950">
+        <h2 class="text-2xl">Results (Average Rating: {ratingRanges[i]}, Total: {group.length})</h2>
 
         <table class="text-slate-300 table-auto border-separate border-spacing-2 border border-slate-500">
             <thead class="text-2xl text-slate-500">
@@ -25,7 +52,7 @@
                 </tr>
             </thead>
             <tbody>
-                {#each Object.entries(songData) as [song, data]}
+                {#each group as {song, data}}
                     <tr>
                         <TableCell data={song} />
                         <TableCell data={data.ratings.join(', ')} />
@@ -34,8 +61,8 @@
                 {/each}
             </tbody>
         </table>
-
     </div>
+{/each}
 </div>
 
 
