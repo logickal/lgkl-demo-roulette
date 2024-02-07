@@ -30,6 +30,11 @@
             }
         });
 
+        // Sort each group alphabetically by song
+        g1.sort((a, b) => a.song.localeCompare(b.song));
+        g2.sort((a, b) => a.song.localeCompare(b.song));
+        g3.sort((a, b) => a.song.localeCompare(b.song));
+
         $group1 = g1;
         $group2 = g2;
         $group3 = g3;
